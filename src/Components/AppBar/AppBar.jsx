@@ -2,14 +2,22 @@ import Navigation from '../Navigation';
 import AuthNav from '../AuthNav';
 import UserMenu from '../UserMenu';
 import { Navbar } from 'react-bootstrap';
-// import s from './AppBar.module.css';
-import { connect } from 'react-redux';
+import s from './AppBar.module.css';
+import { useSelector } from 'react-redux';
 import { getIsAuthenticated } from '../../redux/auth/auth-selectors';
 
-const AppBar = ({ isAuthenticated }) => {
+const AppBar = () => {
+  const isAuthenticated = useSelector(getIsAuthenticated);
+
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-      <Navbar.Brand>Phonebook</Navbar.Brand>
+    <Navbar
+      collapseOnSelect
+      expand="lg"
+      bg="dark"
+      variant="dark"
+      className={s.navbar}
+    >
+      <Navbar.Brand className={s.navbar_brand}>Phonebook</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Navigation />
@@ -19,8 +27,4 @@ const AppBar = ({ isAuthenticated }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  isAuthenticated: getIsAuthenticated(state),
-});
-
-export default connect(mapStateToProps, null)(AppBar);
+export default AppBar;

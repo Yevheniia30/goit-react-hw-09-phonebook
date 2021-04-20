@@ -1,4 +1,5 @@
-import { connect } from 'react-redux';
+import { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   // addContactRequest,
   // addContactSuccess,
@@ -7,11 +8,16 @@ import {
   filterContact,
 } from '../../redux/phoneBook/phoneBook-actions';
 import { getFilter } from '../../redux/phoneBook/phoneBook-selectors';
-
-import PropTypes from 'prop-types';
 import s from './Filter.module.css';
 
-const Filter = ({ filter, onChange }) => {
+const Filter = () => {
+  const filter = useSelector(getFilter);
+  const dispatch = useDispatch();
+  // useCallback мемоизирует функцию
+  const onChange = useCallback(e => dispatch(filterContact(e.target.value)), [
+    dispatch,
+  ]);
+
   return (
     <div className={s.filter}>
       <label htmlFor="" className={s.label}>
@@ -29,17 +35,4 @@ const Filter = ({ filter, onChange }) => {
   );
 };
 
-Filter.propTypes = {
-  filter: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = state => ({
-  filter: getFilter(state),
-});
-
-const mapDispatchToProps = dispatch => ({
-  onChange: event => dispatch(filterContact(event.target.value)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Filter);
+export default Filter;

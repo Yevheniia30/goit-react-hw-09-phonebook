@@ -1,18 +1,17 @@
-import { connect } from 'react-redux';
-import {
-  // addContactRequest,
-  // addContactSuccess,
-  // addContactError,
-  deleteContact,
-  // filterContact,
-} from '../../redux/phoneBook/phoneBook-operations';
+import { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteContact } from '../../redux/phoneBook/phoneBook-operations';
 import { getFilteredContacts } from '../../redux/phoneBook/phoneBook-selectors';
 
 import PropTypes from 'prop-types';
 import s from './ContactsList.module.css';
 import { Button } from 'react-bootstrap';
 
-const ContactsList = ({ contacts = [], onDelete }) => {
+const ContactsList = () => {
+  const contacts = useSelector(getFilteredContacts);
+  const dispatch = useDispatch();
+  const onDelete = useCallback(id => dispatch(deleteContact(id)), [dispatch]);
+
   return (
     <ul className={s.list}>
       {contacts.map(({ id, name, number }) => (
@@ -32,6 +31,8 @@ const ContactsList = ({ contacts = [], onDelete }) => {
   );
 };
 
+export default ContactsList;
+
 ContactsList.propTypes = {
   contacts: PropTypes.arrayOf(
     PropTypes.shape({
@@ -40,15 +41,4 @@ ContactsList.propTypes = {
       number: PropTypes.string.isRequired,
     }),
   ),
-  onDelete: PropTypes.func.isRequired,
 };
-
-const mapStateToProps = state => ({
-  contacts: getFilteredContacts(state),
-});
-
-const mapDispatchToProps = dispatch => ({
-  onDelete: id => dispatch(deleteContact(id)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactsList);

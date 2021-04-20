@@ -3,18 +3,6 @@
   justify-content: align-items;
 }
 
-.base {
-  color: #282c34;
-  text-decoration: none;
-}
-.active {
-  color: tomato;
-  text-decoration: none;
-}
-.link {
-  margin-right: 20px;
-  font-weight: bold;
-}
 .text {
   color: #ffffff;
   margin: 0;

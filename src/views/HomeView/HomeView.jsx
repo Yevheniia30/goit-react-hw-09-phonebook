@@ -1,8 +1,9 @@
 import s from './HomeView.module.css';
 import { getIsAuthenticated } from '../../redux/auth/auth-selectors';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-const HomeView = ({ IsAuthenticated }) => {
+const HomeView = () => {
+  const IsAuthenticated = useSelector(getIsAuthenticated);
   return (
     <div className={s.home_page}>
       {IsAuthenticated ? (
@@ -14,8 +15,4 @@ const HomeView = ({ IsAuthenticated }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  IsAuthenticated: getIsAuthenticated(state),
-});
-
-export default connect(mapStateToProps)(HomeView);
+export default HomeView;

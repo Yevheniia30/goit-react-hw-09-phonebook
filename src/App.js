@@ -1,5 +1,5 @@
-import React, { Component, Suspense, lazy } from 'react';
-import { connect } from 'react-redux';
+import React, { Suspense, lazy, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import Loader from 'react-loader-spinner';
 import s from './App.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -22,41 +22,46 @@ const PhoneBookView = lazy(() =>
   import('./views/PhoneBookView' /* webpackChunkName: "ContactsPage" */),
 );
 
-class App extends Component {
-  componentDidMount() {
-    this.props.onRefreshUser();
-  }
+const App = () => {
+  const dispatch = useDispatch();
 
-  render() {
-    return (
-      <div className={s.App}>
-        <AppBar />
+  useEffect(() => {
+    console.log('useEffect instead componentDidMount');
+    dispatch(getCurrentUser());
+  }, [dispatch]);
 
-        <Suspense
-          fallback={
-            <Loader
-              type="ThreeDots"
-              color="#424141"
-              height={60}
-              width={60}
-              timeout={3000}
-            />
-          }
-        >
-          <Switch>
-            <Route exact path="/" component={HomeView} />
-            <PublicRoute path="/login" component={LoginView} restricted />
-            <PublicRoute path="/register" component={RegisterView} restricted />
-            <PrivateRoute path="/contacts" component={PhoneBookView} />
-          </Switch>
-        </Suspense>
-      </div>
-    );
-  }
-}
+  return (
+    <div className={s.App}>
+      <AppBar />
 
-const mapDispatchToProps = {
-  onRefreshUser: getCurrentUser,
+      <Suspense
+        fallback={
+          <Loader
+            type="ThreeDots"
+            color="#424141"
+            height={60}
+            width={60}
+            timeout={3000}
+          />
+        }
+      >
+        <Switch>
+          <PublicRoute exact path="/">
+            <HomeView />
+          </PublicRoute>
+          <PublicRoute path="/login" restricted>
+            <LoginView />
+          </PublicRoute>
+          <PublicRoute path="/register" restricted>
+            <RegisterView />
+          </PublicRoute>
+          <PrivateRoute path="/contacts">
+            <PhoneBookView />
+          </PrivateRoute>
+        </Switch>
+      </Suspense>
+    </div>
+  );
 };
 
-export default connect(null, mapDispatchToProps)(App);
+export default App;

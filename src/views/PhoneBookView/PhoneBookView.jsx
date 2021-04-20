@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Loader from 'react-loader-spinner';
 import s from './PhoneBookView.module.css';
 import Form from '../../Components/Form';
@@ -11,41 +11,32 @@ import {
   getError,
 } from '../../redux/phoneBook/phoneBook-selectors';
 
-class PhoneBookView extends Component {
-  componentDidMount() {
-    this.props.getContact();
-  }
-  render() {
-    const { loading, error } = this.props;
-    return (
-      <div className={s.phonebook}>
-        <h1>Phonebook</h1>
-        <Form />
-        <h2>Contacts</h2>
-        <Filter />
-        {loading && (
-          <Loader
-            type="ThreeDots"
-            color="#424141"
-            height={60}
-            width={60}
-            timeout={3000}
-          />
-        )}
-        {error && <p>Oops! Something went wrong...</p>}
-        <ContactsList />
-      </div>
-    );
-  }
-}
+const PhoneBookView = () => {
+  const loading = useSelector(getLoading);
+  const error = useSelector(getError);
+  const dispatch = useDispatch();
 
-const mapStateToProps = state => ({
-  loading: getLoading(state),
-  error: getError(state),
-});
+  useEffect(() => dispatch(getContact()), [dispatch]);
 
-const mapDispatchToProps = dispatch => ({
-  getContact: () => dispatch(getContact()),
-});
+  return (
+    <div className={s.phonebook}>
+      <h1>Phonebook</h1>
+      <Form />
+      <h2>Contacts</h2>
+      <Filter />
+      {loading && (
+        <Loader
+          type="ThreeDots"
+          color="#424141"
+          height={60}
+          width={60}
+          timeout={3000}
+        />
+      )}
+      {error && <p>Oops! Something went wrong...</p>}
+      <ContactsList />
+    </div>
+  );
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(PhoneBookView);
+export default PhoneBookView;

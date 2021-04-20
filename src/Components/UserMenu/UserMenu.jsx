@@ -1,11 +1,16 @@
-import { connect } from 'react-redux';
+import { useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import s from './UserMenu.module.css';
 import { getUsername } from '../../redux/auth/auth-selectors';
 import { logout } from '../../redux/auth/auth-operations';
 import Avatar from '@material-ui/core/Avatar';
 import { Button } from 'react-bootstrap';
 
-const UserMenu = ({ name, onLogout }) => {
+const UserMenu = () => {
+  const name = useSelector(getUsername);
+  const dispatch = useDispatch();
+  const onLogout = useCallback(() => dispatch(logout()), [dispatch]);
+
   return (
     <div className={s.user_menu}>
       <div className={s.user_profile}>
@@ -24,12 +29,4 @@ const UserMenu = ({ name, onLogout }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  name: getUsername(state),
-});
-
-const mapDispatchToProps = {
-  onLogout: logout,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserMenu);
+export default UserMenu;
