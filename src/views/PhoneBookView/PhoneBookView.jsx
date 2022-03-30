@@ -2,14 +2,11 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from 'react-loader-spinner';
 import s from './PhoneBookView.module.css';
-import Form from '../../Components/Form';
-import ContactsList from '../../Components/ContactsList';
-import Filter from '../../Components/Filter';
-import { getContact } from '../../redux/phoneBook/phoneBook-operations';
-import {
-  getLoading,
-  getError,
-} from '../../redux/phoneBook/phoneBook-selectors';
+import Form from '@components/Form';
+import ContactsList from '@components/ContactsList';
+import Filter from '@components/Filter';
+import { getContact } from '@redux/phoneBook/phoneBook-operations';
+import { getLoading, getError } from '@redux/phoneBook/phoneBook-selectors';
 
 const PhoneBookView = () => {
   const loading = useSelector(getLoading);

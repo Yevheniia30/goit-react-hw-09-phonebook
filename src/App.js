@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux';
 import Loader from 'react-loader-spinner';
 import s from './App.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import AppBar from './Components/AppBar';
-import { Switch, Route } from 'react-router-dom';
-import { getCurrentUser } from './redux/auth/auth-operations';
-import PrivateRoute from './Components/PrivateRoute';
-import PublicRoute from './Components/PublicRoute';
+import AppBar from '@components/AppBar';
+import { Switch } from 'react-router-dom';
+import { getCurrentUser } from '@redux/auth/auth-operations';
+import PrivateRoute from '@components/PrivateRoute';
+import PublicRoute from '@components/PublicRoute';
 
 const HomeView = lazy(() =>
   import('./views/HomeView' /* webpackChunkName: "HomePage" */),

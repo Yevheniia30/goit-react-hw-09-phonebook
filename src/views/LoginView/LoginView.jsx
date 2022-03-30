@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import s from './LoginView.module.css';
-import { login } from '../../redux/auth/auth-operations';
+import { login } from '@redux/auth/auth-operations';
 import { Button } from 'react-bootstrap';
 
 const LoginView = () => {

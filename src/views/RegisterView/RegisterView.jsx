@@ -1,5 +1,5 @@
 import s from './RegisterView.module.css';
-import { register } from '../../redux/auth/auth-operations';
+import { register } from '@redux/auth/auth-operations';
 import { Button } from 'react-bootstrap';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';

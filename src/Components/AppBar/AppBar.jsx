@@ -4,7 +4,7 @@ import UserMenu from '../UserMenu';
 import { Navbar } from 'react-bootstrap';
 import s from './AppBar.module.css';
 import { useSelector } from 'react-redux';
-import { getIsAuthenticated } from '../../redux/auth/auth-selectors';
+import { getIsAuthenticated } from '@redux/auth/auth-selectors';
 
 const AppBar = () => {
   const isAuthenticated = useSelector(getIsAuthenticated);

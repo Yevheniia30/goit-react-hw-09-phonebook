@@ -1,5 +1,5 @@
 import s from './HomeView.module.css';
-import { getIsAuthenticated } from '../../redux/auth/auth-selectors';
+import { getIsAuthenticated } from '@redux/auth/auth-selectors';
 import { useSelector } from 'react-redux';
 
 const HomeView = () => {
